@@ -1,82 +1,133 @@
-# coding: utf-8
-# license: GPLv3
+from colors import *
+from random import randint
+from solar_model import *
 
+import pygame as pg
+import pygame.draw as pgd
+import math as m
 
 class Star:
-    """Тип данных, описывающий звезду.
-    Содержит массу, координаты, скорость звезды,
-    а также визуальный радиус звезды в пикселах и её цвет.
-    """
-
-    type = "star"
-    """Признак объекта звезды"""
-
-    m = 0
-    """Масса звезды"""
-
-    x = 0
-    """Координата по оси **x**"""
-
-    y = 0
-    """Координата по оси **y**"""
-
-    Vx = 0
-    """Скорость по оси **x**"""
-
-    Vy = 0
-    """Скорость по оси **y**"""
-
-    Fx = 0
-    """Сила по оси **x**"""
-
-    Fy = 0
-    """Сила по оси **y**"""
-
-    R = 5
-    """Радиус звезды"""
-
-    color = "red"
-    """Цвет звезды"""
-
-    image = None
-    """Изображение звезды"""
+    def __init__(self):
+        self.type = 'star'
+        self.m = 0
+        self.x = 0
+        self.y = 0
+        self.Vx = 0
+        self.Vy = 0
+        self.Fx = 0
+        self.Fy = 0
+        self.R = 5
+        self.color = RED
+        self.image = None
+        
+    def app(self, screen, x, y, space_objects, dt):
+        pgd.circle(screen, self.color, (x, y), self.R)
+        recalculate_space_objects_positions(space_objects, dt)
+        
+    def convert_color(self):
+        if self.color == "orange":
+            self.color = ORANGE
+        elif self.color == "red":
+            self.color = RED
+        elif self.color == "blue":
+            self.color = BLUE
+        elif self.color == "green":
+            self.color = GREEN
+        elif self.color == "yellow":
+            self.color = YELLOW
+        elif self.color == "white":
+            self.color = WHITE
+        elif self.color == "gray":
+            self.color = GRAY
+        elif self.color == "cyan":
+            self.color = CYAN
+            
+    def unconvert_color(self):
+        if self.color == ORANGE:
+            self.color = 'orange'
+        elif self.color == RED:
+            self.color = 'red'
+        elif self.color == BLUE:
+            self.color = 'blue'
+        elif self.color == GREEN:
+            self.color = 'green'
+        elif self.color == YELLOW:
+            self.color = 'yellow'
+        elif self.color == WHITE:
+            self.color = 'white'
+        elif self.color == GRAY:
+            self.color = 'gray'
+        elif self.color == CYAN:
+            self.color = 'cyan'
 
 
 class Planet:
-    """Тип данных, описывающий планету.
-    Содержит массу, координаты, скорость планеты,
-    а также визуальный радиус планеты в пикселах и её цвет
-    """
+    def __init__(self):
+        self.type = 'planet'
+        self.m = 0
+        self.x = 0
+        self.y = 0
+        self.Vx = 0
+        self.Vy = 0
+        self.Fx = 0
+        self.Fy = 0
+        self.R = 5
+        self.color = GREEN
+        self.image = None
+        
+    def app(self, screen, x, y, space_objects, dt):
+        pgd.circle(screen, self.color, (x, y), self.R)
+        recalculate_space_objects_positions(space_objects, dt)
+        
+    def convert_color(self):
+        if self.color == "orange":
+            self.color = ORANGE
+        elif self.color == "red":
+            self.color = RED
+        elif self.color == "blue":
+            self.color = BLUE
+        elif self.color == "green":
+            self.color = GREEN
+        elif self.color == "yellow":
+            self.color = YELLOW
+        elif self.color == "white":
+            self.color = WHITE
+        elif self.color == "gray":
+            self.color = GRAY
+        elif self.color == "cyan":
+            self.color = CYAN
+            
+    def unconvert_color(self):
+        if self.color == ORANGE:
+            self.color = 'orange'
+        elif self.color == RED:
+            self.color = 'red'
+        elif self.color == BLUE:
+            self.color = 'blue'
+        elif self.color == GREEN:
+            self.color = 'green'
+        elif self.color == YELLOW:
+            self.color = 'yellow'
+        elif self.color == WHITE:
+            self.color = 'white'
+        elif self.color == GRAY:
+            self.color = 'gray'
+        elif self.color == CYAN:
+            self.color = 'cyan'
 
-    type = "planet"
-    """Признак объекта планеты"""
 
-    m = 0
-    """Масса планеты"""
 
-    x = 0
-    """Координата по оси **x**"""
-
-    y = 0
-    """Координата по оси **y**"""
-
-    Vx = 0
-    """Скорость по оси **x**"""
-
-    Vy = 0
-    """Скорость по оси **y**"""
-
-    Fx = 0
-    """Сила по оси **x**"""
-
-    Fy = 0
-    """Сила по оси **y**"""
-
-    R = 5
-    """Радиус планеты"""
-
-    color = "green"
-    """Цвет планеты"""
-
-    image = None
-    """Изображение планеты"""
+class Sky:
+    star_amount = 60
+    star_r = 1
+    def __init__(self, screen, size):
+        self.screen = screen
+        self.Rect = ((0, 0), size)
+        self.stars = []
+        for i in range(Sky.star_amount):
+            self.stars.append((randint(0, size[0]), randint(0, size[1])))
+        
+    def app(self):
+        pgd.rect(self.screen, BLACK, self.Rect)
+        for star in self.stars:
+            pgd.circle(self.screen, WHITE, star, Sky.star_r)
