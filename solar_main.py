@@ -314,7 +314,7 @@ clock = pg.time.Clock()
 space_objects = []
 vx_list = []
 y_list = []
-time_step = 1000
+time_step = 100
 finished = False
 not_started = True
 k = 0
@@ -325,11 +325,11 @@ while not finished:
     for event in pg.event.get():
         if event.type==pg.KEYDOWN and event.key==pg.K_SPACE:
             if not_started==False:
-                time_step += 1000
+                time_step += 200
                 print(time_step)
         if event.type==pg.KEYDOWN and event.key==pg.K_BACKSPACE:
             if not_started==False:
-                time_step -= 1000
+                time_step -= 200
                 print(time_step)
         if event.type==pg.MOUSEBUTTONDOWN and event.button==1:
             if not_started == False:
