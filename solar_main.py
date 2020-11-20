@@ -239,7 +239,10 @@ mx = file_menu.Rect[0][0]-ml-10
 my = file_menu.Rect[0][1]+file_menu.Rect[1][1]//2
 hard_drive_menu.Rect = ((mx, my), (ml, mh))
 x, y, =  hard_drive_menu.Rect[0][0]+10, hard_drive_menu.Rect[0][1]+5
-l, h = ml-20, (mh-(len(drives)+1)*5)//len(drives)
+if len(drives) != 0:
+    l, h = ml-20, (mh-(len(drives)+1)*5)//len(drives)
+else:
+    hard_drive_menu.Rect = ((0, 0), (0, 0))
 hard_drives = []
 for elem in drives:
     hard_drives.append(Button(screen, x, y, l, h, (RED, BLACK), elem, 5))
